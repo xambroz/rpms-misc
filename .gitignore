@@ -1,0 +1,11 @@
+*.tgz
+*.tar.gz
+*.tar.gz.sig
+*.tbz2
+*.tar.bz2
+*.zip
+*.rpm
+*.jar
+*.xz
+*.xz.sign
+*.gem
