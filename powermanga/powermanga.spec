@@ -1,7 +1,7 @@
 Summary: Arcade 2D shoot-them-up game
 Name: powermanga
 Version: 0.93.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 URL: http://linux.tlk.fr/games/Powermanga/
 
