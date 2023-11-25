@@ -85,7 +85,7 @@ echo "Lang=en" > \
 
 
 %changelog
-* Sat Nov 26 2023 Michal Ambroz <rebus _AT seznam.cz> - 0.92.1-1
+* Sun Nov 26 2023 Michal Ambroz <rebus _AT seznam.cz> - 0.92.1-1
 - bump to 0.92.1
 
 * Fri Jul 21 2023 Fedora Release Engineering <releng@fedoraproject.org> - 0.90-34
