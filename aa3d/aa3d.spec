@@ -3,9 +3,13 @@ Version:        1.0
 Release:        1%{?dist}
 Summary:        ASCII art stereogram generator
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            http://aa-project.sourceforge.net/aa3d/
 Source0:        http://downloads.sourceforge.net/aa-project/%{name}-%{version}.tar.gz
+
+Buildrequires:  make
+Buildrequires:  gcc
+
 
 %description
 AA-project releases so called technology demo for it's 3d stereogram
