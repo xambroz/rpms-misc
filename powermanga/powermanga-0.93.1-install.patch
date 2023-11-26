@@ -158,3 +158,24 @@ diff -ru powermanga-0.93.1.orig/texts/Makefile.am powermanga-0.93.1.new/texts/Ma
  
  dist_pkgdata_DATA = \
    about_en.txt \
+diff -ru powermanga-0.93.1/src/tools.c powermanga-0.93.1.new/src/tools.c
+--- powermanga-0.93.1/src/tools.c	2015-01-10 19:06:28.000000000 +0100
++++ powermanga-0.93.1.new/src/tools.c	2023-11-26 19:26:30.342806751 +0100
+@@ -534,7 +534,7 @@
+ static const char *data_directories[] = {
+   /* normally unused, except when running from the source directory... */
+   ".",
+-  /* special value meaning "$(PREFIX)/share/games/powermanga/" */
++  /* special value meaning "$(PREFIX)/share/powermanga/" */
+   /* also marks end of list */
+   0
+ };
+@@ -622,7 +622,7 @@
+ #else
+   struct stat s;
+ #endif
+-  const char *subdir = "/share/games/powermanga/";
++  const char *subdir = "/share/powermanga/";
+ 
+   if (name == NULL)
+     {
