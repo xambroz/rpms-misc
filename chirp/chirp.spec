@@ -2,7 +2,7 @@
 %global debug_package %{nil}
 
 Name:           chirp
-Version:        20230321
+Version:        20231125
 Release:        1%{?dist}
 Summary:        A tool for programming two-way radio equipment
 
