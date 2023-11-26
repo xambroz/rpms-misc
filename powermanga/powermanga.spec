@@ -1,28 +1,31 @@
 Summary: Arcade 2D shoot-them-up game
-Name: powermanga
-Version: 0.93.1
-Release: 2%{?dist}
-License: GPLv3+
-URL: http://linux.tlk.fr/games/Powermanga/
+Name:           powermanga
+Version:        0.93.1
+Release:        1%{?dist}
+License:        GPL-3.0-or-later
+URL:            http://linux.tlk.fr/games/Powermanga/
 
 
 Source0: http://linux.tlk.fr/games/Powermanga/download/powermanga-%{version}.tgz
 Source1: powermanga.png
 Source2: powermanga.desktop
-Patch0: powermanga-0.90-install.patch
+
+# install to directories common for Fedora
+Patch0:         powermanga-0.93.1-install.patch
+
 # The resulting binary requires libmikmod.so.3 according to ldd, but the
 # automatic dependency isn't generated (#577509)
-Requires: libmikmod
-BuildRequires: make
+Requires:       libmikmod
+BuildRequires:  make
 BuildRequires:  gcc
-BuildRequires: libmikmod-devel
-BuildRequires: gawk
-BuildRequires: libXt-devel, libXxf86dga-devel, libXxf86vm-devel
-BuildRequires: SDL-devel
-BuildRequires: SDL_mixer-devel
-BuildRequires: zlib-devel
-BuildRequires: libpng-devel
-BuildRequires: desktop-file-utils
+BuildRequires:  libmikmod-devel
+BuildRequires:  gawk
+BuildRequires:  libXt-devel, libXxf86dga-devel, libXxf86vm-devel
+BuildRequires:  SDL-devel
+BuildRequires:  SDL_mixer-devel
+BuildRequires:  zlib-devel
+BuildRequires:  libpng-devel
+BuildRequires:  desktop-file-utils
 
 %description
 Powermanga is a vertical scrolling arcade style 2D shoot-them-up game with
@@ -31,20 +34,16 @@ Powermanga is a vertical scrolling arcade style 2D shoot-them-up game with
 
 %prep
 %autosetup -p 1
-
-# configure drops CFLAGS
-sed -i -e 's|\(CFLAGS="-O3 -Wall -std=c99"\)|:\1|' configure*
-# Avoid rerunning the autotools
-touch -r aclocal.m4 configure* $(find -name 'Makefile*')
+autoreconf -v -i
 
 %build
 # The original configure script sets that mandatory -std=c99
-%configure CFLAGS="%{optflags} -std=c99 -lm"
-%{__make} %{?_smp_mflags}
+%configure
+%make_build
 
 
 %install
-%{__make} install DESTDIR=%{buildroot}
+%make_install
 
 # Allow stripping, g+s will be set back in %%files
 %{__chmod} g-s %{buildroot}%{_bindir}/powermanga
@@ -79,14 +78,15 @@ echo "Lang=en" > \
 %{_datadir}/powermanga/texts/*.txt
 %config(noreplace) %{_datadir}/powermanga/texts/config.ini
 %{_mandir}/man6/powermanga.6*
-%config(noreplace) %attr(664,root,games) %{_var}/games/powermanga.hi
-%config(noreplace) %attr(664,root,games) %{_var}/games/powermanga.hi-easy
-%config(noreplace) %attr(664,root,games) %{_var}/games/powermanga.hi-hard
+%{_mandir}/{fr}/man6/powermanga.6*
+%config(noreplace) %attr(664,root,games) %{_var}/games/powermanga/powermanga.hi
+%config(noreplace) %attr(664,root,games) %{_var}/games/powermanga/powermanga.hi-easy
+%config(noreplace) %attr(664,root,games) %{_var}/games/powermanga/powermanga.hi-hard
 
 
 %changelog
-* Sun Nov 26 2023 Michal Ambroz <rebus _AT seznam.cz> - 0.92.1-1
-- bump to 0.92.1
+* Sun Nov 26 2023 Michal Ambroz <rebus _AT seznam.cz> - 0.93.1-1
+- bump to 0.93.1
 
 * Fri Jul 21 2023 Fedora Release Engineering <releng@fedoraproject.org> - 0.90-34
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
