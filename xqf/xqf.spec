@@ -1,27 +1,30 @@
+Name:           xqf
+Version:        1.0.6.2
+Release:        2%{?dist}
+License:        GPLv2+
+Summary:        Server browser for many popular games
+URL:            http://xqf.github.io/
+#               http://www.linuxgames.com/xqf/
+#               https://github.com/XQF/xqf/releases
+
 %global         gituser         XQF
 %global         gitname         xqf
 %global         commit          97afad6998a2625789aae5002c748a3d3ae07c33
 %global         shortcommit     %(c=%{commit}; echo ${c:0:7})
 
-
-Name:           xqf
-Version:        1.0.6.2
-Release:        1%{?dist}
-Summary:        Server browser for many popular games
-
-Group:          Amusements/Games
-License:        GPLv2+
-#               http://www.linuxgames.com/xqf/
-#               https://github.com/XQF/xqf/releases
-URL:            http://xqf.github.io/
-#Source:         http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-Source:         https://github.com/%{gituser}/%{gitname}/archive/xqf-%{version}.tar.gz#/%{name}-%{version}.tar.gz
+#Source:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source:         https://github.com/%{gituser}/%{gitname}/archive/xqf-%{version}.tar.gz
 Source1:        %{name}.desktop
 Patch0:         %{name}-%{version}-launch.patch
 Patch1:		%{name}-libs.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires:       qstat >= 2.11
+
+BuildRequires:  gcc
+BuildRequires:  make
+BuildRequires:  autoconf
+BuildRequires:  automake
 BuildRequires:  GeoIP-devel
 BuildRequires:  qstat
 BuildRequires:  gettext
@@ -48,7 +51,6 @@ and uses the GTK+ toolkit.
 #%patch1 -p1
 
 
-
 %build
 ./autogen.sh
 %configure \
@@ -58,12 +60,12 @@ and uses the GTK+ toolkit.
    --enable-externalrcon \
    --enable-gtk2
 
-make %{?_smp_mflags} CFLAGS="%{optflags}"
+export CFLAGS="$CFLAGS -fno-common"
+%make_build
 
 
 %install
-rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
+%make_install
 
 rm -f %{buildroot}%{_datadir}/applications/%{name}.desktop
 
@@ -79,23 +81,7 @@ install -p -m 0644 pixmaps/%{name}_32x32.png \
 %find_lang %{name}
 
 
-%clean
-rm -rf %{buildroot}
 
-
-%post
-touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-
-%postun
-if [ $1 -eq 0 ] ; then
-    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-
-%posttrans
-gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %files -f %{name}.lang
