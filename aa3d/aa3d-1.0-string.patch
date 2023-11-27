@@ -1,0 +1,12 @@
+diff -ru aa3d-1.0/aa3d.c aa3d-1.0.new/aa3d.c
+--- aa3d-1.0/aa3d.c	1998-08-18 17:53:18.000000000 +0200
++++ aa3d-1.0.new/aa3d.c	2023-11-27 01:36:51.517355400 +0100
+@@ -22,6 +22,8 @@
+  */
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
++
+ static char data[65536 / 2];
+ int main(int argc, char **argv)
+ {
