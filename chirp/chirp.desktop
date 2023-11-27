@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Chirp
 GenericName=chirp
-Exec=chirpw
+Exec=chirp
 Icon=chirp
 Terminal=false
 Type=Application

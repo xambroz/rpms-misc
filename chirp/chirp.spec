@@ -8,7 +8,7 @@ Summary:        A tool for programming two-way radio equipment
 
 License:        GPLv3+
 URL:            http://chirp.danplanet.com/
-# Source0:        http://trac.chirp.danplanet.com/chirp_daily/daily-%{version}/%{src_name}-%{version}.tar.gz
+# Source0:      http://trac.chirp.danplanet.com/chirp_daily/daily-%%{version}/%%{src_name}-%%{version}.tar.gz
 Source0:        https://trac.chirp.danplanet.com/chirp_next/next-%{version}/chirp-%{version}.tar.gz
 Source1:        %{name}.desktop
 
@@ -19,12 +19,19 @@ BuildArch:      noarch
 BuildRequires:  desktop-file-utils
 
 BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+BuildRequires:  python3-wheel
 BuildRequires:  python3-libxml2
 BuildRequires:  python3-pyserial
+BuildRequires:  python3-yattag
+BuildRequires:  python3-requests
+BuildRequires:  python3-six
+BuildRequires:  python3-suds
+BuildRequires:  python3-wxpython4
 
 
 Requires:       pygtk2
-Requires:       %{py3_dist pyserial suds-jurko}
+Requires:       python3-pyserial
 Requires:       python3-libxml2
 
 %description
@@ -37,38 +44,48 @@ models under the hood.
 %autosetup -p1 -n %{src_name}-%{version}
 
 
+%generate_buildrequires
+%pyproject_buildrequires -t
+
+
 %build
-%{py3_build}
+#%%{py3_build}
+%pyproject_wheel
 
 
 %install
-%{py3_install}
+#%%{py3_install}
+%pyproject_install
+%pyproject_save_files chirp
 
 # Remove the tk8180 driver as it depends on python2-future which is no longer
 # available in Fedora 31 and up.
-rm -f %{buildroot}%{python3_sitelib}/%{name}/drivers/tk8180.py*
+# rm -f %%{buildroot}%%{python3_sitelib}/%%{name}/drivers/tk8180.py*
 
 # Wrong .desktop config lets install the correct .desktop
 desktop-file-install \
         --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 
-# %find_lang CHIRP
+# %%find_lang CHIRP
 
 
-#%files -f CHIRP.lang
-%files
+#%%files -f CHIRP.lang
+%files -f %{pyproject_files}
 %license COPYING
 %{_bindir}/chirp
 %{_bindir}/chirpc
-# %{_datadir}/%{name}/
+# %%{_datadir}/%%{name}/
 %{_datadir}/applications/%{name}.desktop
-# %{_datadir}/pixmaps/%{name}.png
-%{python3_sitelib}/%{src_name}-%{version}-*.egg-info
-%{python3_sitelib}/%{name}/
-%exclude %{_datadir}/%{name}/locale
+# %%{_datadir}/pixmaps/%%{name}.png
+# %%{python3_sitelib}/%%{src_name}-%%{version}-*.egg-info
+# %%{python3_sitelib}/%%{name}/
+# %%exclude %%{_datadir}/%%{name}/locale
 
 
 %changelog
+* Sun Nov 26 2023 Michal Ambroz <rebus _AT seznam.cz> - 20231125-1
+- bump to 20231125-1
+
 * Wed Jun 03 2020 Richard Shaw <hobbes1069@gmail.com> - 20200603-1
 - Update to 20200603.
 
