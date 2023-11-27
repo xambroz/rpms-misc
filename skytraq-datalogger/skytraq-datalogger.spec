@@ -1,4 +1,4 @@
-%global 	upversion 0.5-1
+%global         upversion 0.5-1
 Name:           skytraq-datalogger
 Version:        0.5
 Release:        1%{?dist}
@@ -6,10 +6,10 @@ Summary:        Skytraq GPS Datalogger management tool
 
 License:        GPLv2+
 URL:            https://code.google.com/p/skytraq-datalogger/downloads/
-#Source0:        https://code.google.com/p/skytraq-datalogger/downloads/%{name}_%{upversion}.tar.gz
-Source0:	https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/%{name}/%{name}_%{upversion}.tar.gz
+#Source0:       https://code.google.com/p/skytraq-datalogger/downloads/%%{name}_%%{upversion}.tar.gz
+Source0:        https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/%{name}/%{name}_%{upversion}.tar.gz
 
-Patch0:		%{name}-curl.patch
+Patch0:         %{name}-curl.patch
 
 BuildRequires:  make
 BuildRequires:  gcc
