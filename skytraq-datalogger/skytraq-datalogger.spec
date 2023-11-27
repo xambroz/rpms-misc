@@ -11,6 +11,8 @@ Source0:	https://storage.googleapis.com/google-code-archive-downloads/v2/code.go
 
 Patch0:		%{name}-curl.patch
 
+BuildRequires:  make
+BuildRequires:  gcc
 BuildRequires:  libcurl-devel
 
 
@@ -18,17 +20,15 @@ BuildRequires:  libcurl-devel
 Manipulate data on skytraq GPS data logger.
 
 %prep
-%setup -q -n %{name}-%{upversion}
-%patch0 -p1 -b .curl
+%autosetup -n %{name}-%{upversion} -p 1
 
 
 %build
 #configure
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{_bindir}
 %make_install
 
