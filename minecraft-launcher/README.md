@@ -33,6 +33,7 @@ rpm -Uhv minecraft-launcher-1.0.1221-1.fc40.nosrc.rpm
 mkdir -p ~/rpmbuild/{SPECS,SOURCES}
 cp -p minecraft-launcher.spec ~/rpmbuild/SPECS/
 cp -p minecraft-launcher.desktop ~/rpmbuild/SOURCES/
+cp -p minecraft-launcher.metanfo.xml ~/rpmbuild/SOURCES/
 
 3) download sources from official site
 # create secondary file without the "Nosource" stanzas

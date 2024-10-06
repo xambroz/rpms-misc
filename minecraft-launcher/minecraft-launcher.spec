@@ -1,6 +1,6 @@
 Name:           minecraft-launcher
 Summary:        Official Minecraft Launcher (bootstrap)
-License:        commercial https://www.minecraft.net/en-us/eula
+License:        LicenseRef-Proprietary=https://www.minecraft.net/en-us/eula
 URL:            https://www.minecraft.net/
 #		https://www.minecraft.net/en-us/download
 
@@ -15,6 +15,11 @@ Nosource:       0
 Source1:        https://launcher.mojang.com/download/minecraft-launcher.svg
 Nosource:       1
 Source2:        minecraft-launcher.desktop
+Source3:        minecraft-launcher.metainfo.xml
+Source4:        https://www.minecraft.net/en-us/eula#/EULA.html
+Nosource:       4
+
+
 BuildArch:      x86_64
 ExclusiveArch:  x86_64
 
@@ -120,9 +125,6 @@ Provides:       bundled(utfcpp)
 
 
 %description
-The minecraft-launcher is free (as beer) to download and use.
-However for playing the game a valid game license is needed
-to connect to online resources of Mojang/Microsoft.
 This package delivers the bootstrap version of the launcher,
 the minimum client to update, maintain and run the actuall
 game launcher and game content from Mojang / Microsoft.
@@ -130,14 +132,26 @@ The updated version of the launcher is after login and
 and license check downloaded to user's home directory
 to ~/.minecraft folder.
 
+Playing the game requires a valid game license
+to connect to online resources of Mojang/Microsoft.
+For more information check the
+https://www.minecraft.net/en-us/eula
+
 
 %prep
 # ======================= prep =======================================
 %autosetup -n minecraft-launcher
-# Launcher icon is missing in the tar.gz distribution for other Linux
+# These files are not in the minecraft-launcher.tar.gz distribution for other Linux
+# Hopefully one day it will be added there
+# SVG icon
 cp -f %{SOURCE1} ./
 # *.desktop file is missing in the tar.gz distribution for other Linux
 cp -f %{SOURCE2} ./
+# appdata metainfo
+cp -f %{SOURCE3} ./
+# EULA.html license from https://www.minecraft.net/en-us/eula
+cp -f %{SOURCE4} ./
+
 
 %build
 # ======================= build ======================================
@@ -147,18 +161,20 @@ echo Do nothing for the build
 # ======================= install ====================================
 # Install binary
 mkdir -p %{buildroot}%{_bindir}
-install -m 0755 minecraft-launcher %{buildroot}%{_bindir}/minecraft-launcher
+install -p -m 0755 minecraft-launcher %{buildroot}%{_bindir}/minecraft-launcher
 ln -s minecraft-launcher %{buildroot}%{_bindir}/minecraft
 
 # Install application launcher icon
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
-install -m 0644 minecraft-launcher.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/minecraft-launcher.svg
+install -p -m 0644 minecraft-launcher.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/minecraft-launcher.svg
 
 # Install application launcher desktop file
 mkdir -p %{buildroot}%{_datadir}/applications/
-install -m 0644 minecraft-launcher.desktop %{buildroot}%{_datadir}/applications/minecraft-launcher.desktop
-desktop-file-validate %{buildroot}%{_datadir}/applications/minecraft-launcher.desktop
+install -p -m 0644 minecraft-launcher.desktop %{buildroot}%{_datadir}/applications/minecraft-launcher.desktop
 
+# Install metadata for Gnome Software
+mkdir -p %{buildroot}%{_datadir}/metainfo/
+install -p -m 0644 minecraft-launcher.metainfo.xml %{buildroot}%{_datadir}/metainfo/minecraft-launcher.metainfo.xml
 
 %post
 update-desktop-database &> /dev/null ||:
@@ -179,14 +195,23 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 
+%check
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/minecraft-launcher.metainfo.xml
+desktop-file-validate %{buildroot}%{_datadir}/applications/minecraft-launcher.desktop
+
+
+
+
 
 %files
 # ======================= files ======================================
 #%doc
+%license EULA.html
 %{_bindir}/minecraft
 %{_bindir}/minecraft-launcher
 %{_datadir}/applications/minecraft-launcher.desktop
 %{_datadir}/icons/hicolor/scalable/apps/minecraft-launcher.svg
+%{_datadir}/metainfo/minecraft-launcher.metainfo.xml
 
 %changelog
 * Wed Mar 23 2022 Mojang <info@mojang.com> - 1.0.1221-1

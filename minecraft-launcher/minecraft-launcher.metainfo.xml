@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>minecraft-launcher.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary=https://www.minecraft.net/en-us/eula</project_license>
+  <name>Minecraft</name>
+  <summary>The Official Minecraft Launcher</summary>
+  <description>
+    <p>
+	This package delivers the bootstrap version of the launcher,
+	the minimum client to update, maintain and run the actuall
+	game launcher and game content from Mojang / Microsoft.
+	The updated version of the launcher is after login and
+	and license check downloaded to user's home directory
+	to ~/.minecraft folder.
+
+	Playing the game requires a valid game license
+	to connect to online resources of Mojang/Microsoft.
+	For more information check the
+	https://www.minecraft.net/en-us/eula
+
+    </p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.minecraft.net/content/dam/franchise/experiments/1156543/Hero-Banner_Vanilla_Ultrawide_1920x560.jpg</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.minecraft.net/content/dam/games/minecraft/screenshots/PLAYTOGETHERPDPScreenshotRefresh2024_exitingPortal_01.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.minecraft.net/content/dam/games/minecraft/screenshots/EXPERIENCE_MORE_MinecraftEDU_PrivacyProdigy_darkWeb.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.minecraft.net/content/dam/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.minecraft.net/content/dam/games/minecraft/screenshots/SURVIVE.png</image>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">https://www.minecraft.net/en-us/about-minecraft</url>
+  <update_contact>rebus_at_seznam.cz</update_contact>
+</component>
