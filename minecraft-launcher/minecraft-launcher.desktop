@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Version=1.0
+Name=Minecraft Launcher
+Comment=Runs Official Minecraft Launcher from bootstrap
+Exec=minecraft-launcher
+Icon=minecraft-launcher
+Categories=Game
+StartupWMClass=minecraft-launcher

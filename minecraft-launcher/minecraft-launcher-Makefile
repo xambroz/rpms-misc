@@ -1,0 +1,18 @@
+# make install for minecraft-launcher
+DESTDIR=/
+PREFIX=/usr
+BINDIR=$(PREFIX)/bin
+DATADIR=$(PREFIX)/share
+
+install:
+	mkdir -p $(DESTDIR)/$(BINDIR)
+	install -m 0755 minecraft-launcher $(DESTDIR)/$(BINDIR)/minecraft-launcher
+	ln -s minecraft-launcher $(DESTDIR)/$(BINDIR)/minecraft
+	# Install application launcher icon
+	mkdir -p $(DESTDIR)/$(DATADIR)/icons/hicolor/scalable/apps
+	install -m 0644 minecraft-launcher.svg $(DESTDIR)/$(DATADIR)/icons/hicolor/scalable/apps/minecraft-launcher.svg
+	# Install application launcher desktop file
+	mkdir -p $(DESTDIR)/$(DATADIR)/applications/
+	install -m 0644 minecraft-launcher.desktop $(DESTDIR)/$(DATADIR)/applications/minecraft-launcher.desktop
+	desktop-file-validate $(DESTDIR)/$(DATADIR)/applications/minecraft-launcher.desktop
+
